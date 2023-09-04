@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:moneyapplication/expensepage.dart';
+import 'package:moneyapplication/saveInput.dart';
+import 'package:moneyapplication/nextpage.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -8,12 +11,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController dueDatecontroller = TextEditingController();
+  TextEditingController dueDate = TextEditingController();
+  TextEditingController number = TextEditingController();
+  TextEditingController name = TextEditingController();
+
   int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( resizeToAvoidBottomInset : false,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("MoneyManagement",
             style: TextStyle(
@@ -27,14 +34,60 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                onPressed: () {},
-                child: Text("Expense"),
+                onPressed: () {const snackdemo = SnackBar(
+                  content: Text('Data Is Saved'),
+                  duration: Duration(milliseconds: 1000),
+                  backgroundColor: Colors.green,
+                  elevation: 10,
+                  behavior: SnackBarBehavior.floating,
+                  margin: EdgeInsets.all(30),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackdemo);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ExpensePage(
+                                amount: number.text,
+                                date: dueDate.text,
+                                write: name.text,
+                              )));
+                },
+                child: Text(
+                  "EXPENSE",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               ElevatedButton(
-                onPressed: () {},
-                child: Text("Income"),
-              ),
+                onPressed: () {
+                  const snackdemo = SnackBar(
+                    content: Text('Data Is Saved'),
+                    duration: Duration(milliseconds: 1000),
+                    backgroundColor: Colors.green,
+                    elevation: 10,
+                    behavior: SnackBarBehavior.floating,
+                    margin: EdgeInsets.all(30),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackdemo);
 
+                  // 'showSnackBar' is deprecated and shouldn't be used.
+                  //Use ScaffoldMessenger.showSnackBar.
+                  // Scaffold.of(context).showSnackBar(snackdemo);
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NextPage(
+                              amount: number.text,
+                              date: dueDate.text,
+                              write: name.text,
+                            )),
+                  );
+                },
+                child: Text(
+                  "INCOME",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
               Icon(Icons.check),
             ],
           ),
@@ -42,19 +95,22 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 20.0,
           ),
           /* Row(
-            children: [
-              TextFormField(
-                decoration:
-                    InputDecoration(),
-              )
-            ],
-          )*/
+              children: [
+                TextFormField(
+                  decoration:
+                      InputDecoration(),
+                )
+              ],
+            )*/
           Padding(
             padding: const EdgeInsets.all(20),
             child: TextFormField(
+              controller: number,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: "EnterNumber",
+                labelText: "EnterYour Amount",
+                labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                hintText: "your Amount",
                 border: OutlineInputBorder(),
               ),
             ),
@@ -63,29 +119,35 @@ class _MyHomePageState extends State<MyHomePage> {
             padding:
                 const EdgeInsets.only(right: 20, left: 20, bottom: 20, top: 20),
             child: TextField(
+              controller: name,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                  labelText: "Description", icon: Icon(Icons.feed_outlined)),
+                  labelText: "Description",
+                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                  hintText: "what has done ?",
+                  icon: Icon(Icons.feed_outlined)),
             ),
           ),
-         /* const Padding(
-            padding: EdgeInsets.all(20),
-            child: TextField(
-              keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(
-                  icon: Icon(
-                    Icons.calendar_month,
-                  ),
-                  labelText: "Date"),
-            ),
-          ),*/
+          /* const Padding(
+              padding: EdgeInsets.all(20),
+              child: TextField(
+                keyboardType: TextInputType.datetime,
+                decoration: InputDecoration(
+                    icon: Icon(
+                      Icons.calendar_month,
+                    ),
+                    labelText: "Date"),
+              ),
+            ),*/
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20,bottom: 20,right: 50,left: 50),
+                padding: const EdgeInsets.only(
+                    top: 20, bottom: 20, right: 50, left: 50),
                 child: TextField(
-                  controller: dueDatecontroller,
-                  decoration: InputDecoration(hintText: "date"),),
+                  controller: dueDate,
+                  decoration: InputDecoration(hintText: "date"),
+                ),
               ),
               IconButton(
                   onPressed: () {
@@ -95,17 +157,20 @@ class _MyHomePageState extends State<MyHomePage> {
                           initialDate: DateTime.now(),
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100));
-                      dueDatecontroller.text = date.toString().substring(0, 10);
+                      dueDate.text = date.toString().substring(0, 10);
                       print(date);
                     });
                   },
                   icon: Icon(Icons.calendar_month)),
+              /* Expanded(
+                  child: SizedBox(height: 50,
+                    child: ListView(children: [ListTile(leading: Icon(Icons.add),title: Text("add"),)
+
+                    ],),
+                  ),
+                )*/
             ],
           ),
-
-
-
-
         ],
       ),
       bottomNavigationBar: NavigationBar(
