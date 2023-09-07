@@ -26,12 +26,15 @@ class NextPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Table(
+                  border: TableBorder.all(),
                   children: [
                     TableRow(children: [
+                     // Icon(Icons.edit,size: 10),
                       Text(
                         date,
-                        textScaleFactor: 1.2,
+                        textScaleFactor: 1.0,
                       ),
+                      //SizedBox(height: 30,),
                       Text(
                         write,
                         textScaleFactor: 1.1,
@@ -40,7 +43,8 @@ class NextPage extends StatelessWidget {
                         amount,
                         textScaleFactor: 1.2,
 
-                      ),
+                      ),//Icon(Icons.delete_forever),
+                      Icon(Icons.edit),Icon(Icons.delete_forever),
                     ])
                   ],
                 ),
