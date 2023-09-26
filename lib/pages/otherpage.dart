@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:moneyapplication/others_page/other_myAccount.dart';
+
 
 class OthersPage extends StatelessWidget {
 
@@ -71,7 +73,9 @@ class MyAccount extends StatelessWidget {
 
 
         leading: CircleAvatar(child: Icon(Icons.person,color: Colors.brown),backgroundColor: Colors.white),
-        trailing: Icon(Icons.arrow_right));
+        trailing: Icon(Icons.arrow_right),onTap: (){
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> MyAccounts()));
+    },);
   }
 }
 
@@ -86,7 +90,8 @@ class MyLanguage extends StatelessWidget {
 
 
         leading: CircleAvatar(child: Icon(Icons.language,color: Colors.black),backgroundColor: Colors.white),
-        trailing: Icon(Icons.arrow_right));
+        trailing: Icon(Icons.arrow_right)
+    );
   }
 }
 class MyCurrency extends StatelessWidget {
